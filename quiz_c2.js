@@ -169,18 +169,6 @@ function calculate(arr) {
   return sum;
 }
 
-let r1 = new Rectangle([0, 0, 10, 10]);
-let r2 = new Rectangle([-3, 4, 5, 9]);
-r1.cal
-
-console.log(r1.isIntersect(r2));
-console.log(r1.getRegtangleIfIntersects(r2));
-
-let c = calculate([
-  [0, 0, 10, 10],
-  [-3, 4, 5, 9],
-]);
-console.log(c);
 // =====================================
 // ไฟล์ส่วนล่างนี้เป็นตัวอย่าง input output (test case)
 // ห้ามแก้ไข!
