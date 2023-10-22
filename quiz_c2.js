@@ -6,8 +6,6 @@
 // // S(R1 ∩ R2) = 4, S(R1 ∩ R3) = 0, S(R2 ∩ R3) = 0
 // // S = S(R1)+S(R2)+S(R3)-S(R1∩R2)-S(R1∩R3)-S(R2 ∩ R3) = 36
 
-const { get } = require("mongoose");
-
 class Rectangle {
   isRectangle = false;
   constructor([x0, y0, x1, y1]) {
