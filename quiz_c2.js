@@ -52,7 +52,7 @@ class Rectangle {
     );
   }
 
-  isIntersects(otherRectangle) {
+  isIntersect(otherRectangle) {
     if (otherRectangle.isRectangle == false) {
       console.error("Rectangle not created: Input is not a rectangle");
       return;
@@ -85,7 +85,7 @@ class Rectangle {
       return;
     }
 
-    if (this.isIntersects(otherRectangle)) {
+    if (this.isIntersect(otherRectangle)) {
       let x0 = Math.max(this.coordA.x, otherRectangle.coordA.x);
       let y0 = Math.max(this.coordA.y, otherRectangle.coordA.y);
       let x1 = Math.min(this.coordB.x, otherRectangle.coordB.x);
@@ -126,7 +126,7 @@ function calculate(arr) {
       if (i !== j) {
         const rCurr = seenRectangles[i];
         const rNext = seenRectangles[j];
-        if (rCurr.isIntersects(rNext)) {
+        if (rCurr.isIntersect(rNext)) {
           const r = rCurr.getRegtangleIfIntersects(rNext);
           if (r.isRectangle) {
             intersecedRectangles.push(r);
@@ -169,18 +169,6 @@ function calculate(arr) {
   return sum;
 }
 
-let a = calculate([
-  [0, 0, 1, 1],
-  [1, 0, 2, 1],
-]);
-
-let r1 = new Rectangle([0, 0, 2, 2]);
-let r2 = new Rectangle([1, 0, 2, 1]);
-
-console.log(r1.isIntersects(r2));
-console.log(r2.isIntersects(r1));
-console.log(r2.isInside(r1));
-
 // =====================================
 // ไฟล์ส่วนล่างนี้เป็นตัวอย่าง input output (test case)
 // ห้ามแก้ไข!
@@ -191,10 +179,10 @@ console.log(r2.isInside(r1));
 //   4. หาก โปรแกรมทำงานถูกต้องจะขึ้น true ทั้งหมด
 // =====================================
 function test(obj) {
-  // console.log(
-  //   obj.index + ": ",
-  //   JSON.stringify(calculate(obj.input)) === JSON.stringify(obj.output)
-  // );
+  console.log(
+    obj.index + ": ",
+    JSON.stringify(calculate(obj.input)) === JSON.stringify(obj.output)
+  );
 }
 
 test({
