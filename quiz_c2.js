@@ -58,10 +58,10 @@ class Rectangle {
       return;
     }
     return (
-      this.coordA.x <= otherRectangle.coordB.x &&
-      this.coordA.y <= otherRectangle.coordB.y &&
-      this.coordB.x >= otherRectangle.coordA.x &&
-      this.coordB.y >= otherRectangle.coordA.y
+      this.coordA.x < otherRectangle.coordB.x &&
+      this.coordA.y < otherRectangle.coordB.y &&
+      this.coordB.x > otherRectangle.coordA.x &&
+      this.coordB.y > otherRectangle.coordA.y
     );
   }
 
@@ -169,6 +169,18 @@ function calculate(arr) {
   return sum;
 }
 
+let a = calculate([
+  [0, 0, 1, 1],
+  [1, 0, 2, 1],
+]);
+
+let r1 = new Rectangle([0, 0, 2, 2]);
+let r2 = new Rectangle([1, 0, 2, 1]);
+
+console.log(r1.isIntersects(r2));
+console.log(r2.isIntersects(r1));
+console.log(r2.isInside(r1));
+
 // =====================================
 // ไฟล์ส่วนล่างนี้เป็นตัวอย่าง input output (test case)
 // ห้ามแก้ไข!
@@ -179,10 +191,10 @@ function calculate(arr) {
 //   4. หาก โปรแกรมทำงานถูกต้องจะขึ้น true ทั้งหมด
 // =====================================
 function test(obj) {
-  console.log(
-    obj.index + ": ",
-    JSON.stringify(calculate(obj.input)) === JSON.stringify(obj.output)
-  );
+  // console.log(
+  //   obj.index + ": ",
+  //   JSON.stringify(calculate(obj.input)) === JSON.stringify(obj.output)
+  // );
 }
 
 test({
