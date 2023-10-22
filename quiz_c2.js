@@ -19,11 +19,9 @@ class Rectangle {
 
     this.slope = this.calSlope();
 
-    if (this.slope === 0 || !isFinite(this.slope)) {
-      return;
+    if (this.slope != 0 && isFinite(this.slope)) {
+      this.isRectangle = true;
     }
-
-    this.isRectangle = true;
   }
 
   findCoordC() {
