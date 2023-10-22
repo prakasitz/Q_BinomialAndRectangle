@@ -11,9 +11,7 @@ class Rectangle {
   constructor([x0, y0, x1, y1]) {
     this.coordA = { x: x0, y: y0 };
     this.coordB = { x: x1, y: y1 };
-    this.coordC = this.findCoordC();
-    this.coordD = this.findCoordD();
-
+  
     this.horizontalDistance = this.calHorizontalDistance();
     this.verticalDistance = this.calVerticalDistance();
 
@@ -22,18 +20,6 @@ class Rectangle {
     if (this.slope != 0 && isFinite(this.slope)) {
       this.isRectangle = true;
     }
-  }
-
-  findCoordC() {
-    let x2 = this.coordA.x;
-    let y2 = this.coordB.y;
-    return { x: x2, y: y2 };
-  }
-
-  findCoordD() {
-    let x3 = this.coordB.x;
-    let y3 = this.coordA.y;
-    return { x: x3, y: y3 };
   }
 
   calHorizontalDistance() {
@@ -74,8 +60,8 @@ class Rectangle {
 
     return !(
       this.coordA.x > otherRectangle.coordB.x ||
-      this.coordB.x < otherRectangle.coordA.x ||
       this.coordA.y > otherRectangle.coordB.y ||
+      this.coordB.x < otherRectangle.coordA.x ||
       this.coordB.y < otherRectangle.coordA.y
     );
   }
