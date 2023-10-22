@@ -104,23 +104,6 @@ function getRectanglesFromInput(inputs) {
   return rectangles;
 }
 
-function getUniqueRectangles(rectangles) {
-  const uniqueRectangles = [];
-  for (let i = 0; i < rectangles.length; i++) {
-    let isDuplicate = false;
-    for (let j = 0; j < uniqueRectangles.length; j++) {
-      if (rectangles[i].isSame(uniqueRectangles[j])) {
-        isDuplicate = true;
-        break;
-      }
-    }
-    if (!isDuplicate) {
-      uniqueRectangles.push(rectangles[i]);
-    }
-  }
-  return uniqueRectangles;
-}
-
 function getIntersectedOfRectangles(rectangles) {
   const intersectedRectangles = [];
   for (let i = 0; i < rectangles.length; i++) {
@@ -138,6 +121,23 @@ function getIntersectedOfRectangles(rectangles) {
     }
   }
   return intersectedRectangles;
+}
+
+function getUniqueRectangles(rectangles) {
+  const uniqueRectangles = [];
+  for (let i = 0; i < rectangles.length; i++) {
+    let isDuplicate = false;
+    for (let j = 0; j < uniqueRectangles.length; j++) {
+      if (rectangles[i].isSame(uniqueRectangles[j])) {
+        isDuplicate = true;
+        break;
+      }
+    }
+    if (!isDuplicate) {
+      uniqueRectangles.push(rectangles[i]);
+    }
+  }
+  return uniqueRectangles;
 }
 
 function getAreaOfRectangles(rectangles) {
