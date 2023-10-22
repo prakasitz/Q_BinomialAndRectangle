@@ -15,11 +15,15 @@ class Rectangle {
     this.horizontalDistance = this.calHorizontalDistance();
     this.verticalDistance = this.calVerticalDistance();
 
-    this.slope = this.calSlope();
+    this.slope = this.#calSlope();
 
     if (this.slope != 0 && isFinite(this.slope)) {
       this.isRectangle = true;
     }
+  }
+  
+  #calSlope() {
+    return (this.coordA.y - this.coordB.y) / (this.coordA.x - this.coordB.x)
   }
 
   calHorizontalDistance() {
@@ -28,10 +32,6 @@ class Rectangle {
 
   calVerticalDistance() {
     return Math.abs(this.coordA.y - this.coordB.y);
-  }
-
-  calSlope() {
-    return (this.coordA.y - this.coordB.y) / (this.coordA.x - this.coordB.x)
   }
 
   calArea() {
