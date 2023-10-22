@@ -11,7 +11,7 @@ class Rectangle {
   constructor([x0, y0, x1, y1]) {
     this.coordA = { x: x0, y: y0 };
     this.coordB = { x: x1, y: y1 };
-  
+
     this.horizontalDistance = this.calHorizontalDistance();
     this.verticalDistance = this.calVerticalDistance();
 
@@ -21,9 +21,9 @@ class Rectangle {
       this.isRectangle = true;
     }
   }
-  
+
   #calSlope() {
-    return (this.coordA.y - this.coordB.y) / (this.coordA.x - this.coordB.x)
+    return (this.coordA.y - this.coordB.y) / (this.coordA.x - this.coordB.x);
   }
 
   calHorizontalDistance() {
@@ -39,7 +39,7 @@ class Rectangle {
   }
 
   isInside(otherRectangle) {
-    if (otherRectangle.isRectangle === false) {
+    if (otherRectangle.isRectangle == false) {
       console.error("Rectangle not created: Input is not a rectangle");
       return;
     }
@@ -53,30 +53,29 @@ class Rectangle {
   }
 
   isIntersects(otherRectangle) {
-    if (otherRectangle.isRectangle === false) {
+    if (otherRectangle.isRectangle == false) {
       console.error("Rectangle not created: Input is not a rectangle");
       return;
     }
-
-    return !(
-      this.coordA.x > otherRectangle.coordB.x ||
-      this.coordA.y > otherRectangle.coordB.y ||
-      this.coordB.x < otherRectangle.coordA.x ||
-      this.coordB.y < otherRectangle.coordA.y
+    return (
+      this.coordA.x <= otherRectangle.coordB.x &&
+      this.coordA.y <= otherRectangle.coordB.y &&
+      this.coordB.x >= otherRectangle.coordA.x &&
+      this.coordB.y >= otherRectangle.coordA.y
     );
   }
 
   isSame(otherRectangle) {
-    if (otherRectangle.isRectangle === false) {
+    if (otherRectangle.isRectangle == false) {
       console.error("Rectangle not created: Input is not a rectangle");
       return;
     }
 
     return (
-      this.coordA.x === otherRectangle.coordA.x &&
-      this.coordA.y === otherRectangle.coordA.y &&
-      this.coordB.x === otherRectangle.coordB.x &&
-      this.coordB.y === otherRectangle.coordB.y
+      this.coordA.x == otherRectangle.coordA.x &&
+      this.coordA.y == otherRectangle.coordA.y &&
+      this.coordB.x == otherRectangle.coordB.x &&
+      this.coordB.y == otherRectangle.coordB.y
     );
   }
 
