@@ -12,29 +12,29 @@ class Rectangle {
     this.coordA = { x: x0, y: y0 };
     this.coordB = { x: x1, y: y1 };
 
-    this.horizontalDistance = this.calHorizontalDistance();
-    this.verticalDistance = this.calVerticalDistance();
+    this.horizontalDistance = this.getHorizontalDistance();
+    this.verticalDistance = this.getVerticalDistance();
 
-    this.slope = this.#calSlope();
+    this.slope = this.#getSlope();
 
     if (this.slope != 0 && isFinite(this.slope)) {
       this.isRectangle = true;
     }
   }
 
-  #calSlope() {
+  #getSlope() {
     return (this.coordA.y - this.coordB.y) / (this.coordA.x - this.coordB.x);
   }
 
-  calHorizontalDistance() {
+  getHorizontalDistance() {
     return Math.abs(this.coordA.x - this.coordB.x);
   }
 
-  calVerticalDistance() {
+  getVerticalDistance() {
     return Math.abs(this.coordA.y - this.coordB.y);
   }
 
-  calArea() {
+  getArea() {
     return this.horizontalDistance * this.verticalDistance;
   }
 
@@ -152,13 +152,13 @@ function calculate(arr) {
 
   const arrAreaOfSeenRectangles = [];
   for (let i = 0; i < seenRectangles.length; i++) {
-    arrAreaOfSeenRectangles.push(seenRectangles[i].calArea());
+    arrAreaOfSeenRectangles.push(seenRectangles[i].getArea());
   }
 
   const arrAreaOfSeenIntersecedRectangles = [];
   for (let i = 0; i < seenIntersecedRectangles.length; i++) {
     arrAreaOfSeenIntersecedRectangles.push(
-      seenIntersecedRectangles[i].calArea()
+      seenIntersecedRectangles[i].getArea()
     );
   }
 
@@ -169,6 +169,18 @@ function calculate(arr) {
   return sum;
 }
 
+let r1 = new Rectangle([0, 0, 10, 10]);
+let r2 = new Rectangle([-3, 4, 5, 9]);
+r1.cal
+
+console.log(r1.isIntersect(r2));
+console.log(r1.getRegtangleIfIntersects(r2));
+
+let c = calculate([
+  [0, 0, 10, 10],
+  [-3, 4, 5, 9],
+]);
+console.log(c);
 // =====================================
 // ไฟล์ส่วนล่างนี้เป็นตัวอย่าง input output (test case)
 // ห้ามแก้ไข!
