@@ -6,6 +6,8 @@
 // // S(R1 ∩ R2) = 4, S(R1 ∩ R3) = 0, S(R2 ∩ R3) = 0
 // // S = S(R1)+S(R2)+S(R3)-S(R1∩R2)-S(R1∩R3)-S(R2 ∩ R3) = 36
 
+const { get } = require("mongoose");
+
 class Rectangle {
   isRectangle = false;
   constructor([x0, y0, x1, y1]) {
@@ -38,12 +40,15 @@ class Rectangle {
     return this.horizontalDistance * this.verticalDistance;
   }
 
-  isInside(otherRectangle) {
-    if (otherRectangle.isRectangle == false) {
+  validate(rectangle) {
+    if (rectangle.isRectangle == false) {
       console.error("Rectangle not created: Input is not a rectangle");
       return;
     }
+  }
 
+  isInside(otherRectangle) {
+    this.validate(otherRectangle);
     return (
       this.coordA.x >= otherRectangle.coordA.x &&
       this.coordA.y >= otherRectangle.coordA.y &&
@@ -53,10 +58,7 @@ class Rectangle {
   }
 
   isIntersect(otherRectangle) {
-    if (otherRectangle.isRectangle == false) {
-      console.error("Rectangle not created: Input is not a rectangle");
-      return;
-    }
+    this.validate(otherRectangle);
     return (
       this.coordA.x < otherRectangle.coordB.x &&
       this.coordA.y < otherRectangle.coordB.y &&
@@ -66,11 +68,7 @@ class Rectangle {
   }
 
   isSame(otherRectangle) {
-    if (otherRectangle.isRectangle == false) {
-      console.error("Rectangle not created: Input is not a rectangle");
-      return;
-    }
-
+    this.validate(otherRectangle);
     return (
       this.coordA.x == otherRectangle.coordA.x &&
       this.coordA.y == otherRectangle.coordA.y &&
@@ -79,7 +77,7 @@ class Rectangle {
     );
   }
 
-  getRegtangleIfIntersects(otherRectangle) {
+  getRectangleIfIntersect(otherRectangle) {
     if (otherRectangle.isRectangle === false) {
       console.error("Rectangle not created: Input is not a rectangle");
       return;
@@ -97,74 +95,77 @@ class Rectangle {
   }
 }
 
-function calculate(arr) {
+function getRectanglesFromInput(inputs) {
   const rectangles = [];
-
-  //prepare regatangle
-  for (let i = 0; i < arr.length; i++) {
-    const r = new Rectangle(arr[i]);
+  for (let i = 0; i < inputs.length; i++) {
+    const r = new Rectangle(inputs[i]);
     rectangles.push(r);
   }
+  return rectangles;
+}
 
-  const seenRectangles = [];
+function getUniqueRectangles(rectangles) {
+  const uniqueRectangles = [];
   for (let i = 0; i < rectangles.length; i++) {
     let isDuplicate = false;
-    for (let j = 0; j < seenRectangles.length; j++) {
-      if (rectangles[i].isSame(seenRectangles[j])) {
+    for (let j = 0; j < uniqueRectangles.length; j++) {
+      if (rectangles[i].isSame(uniqueRectangles[j])) {
         isDuplicate = true;
         break;
       }
     }
     if (!isDuplicate) {
-      seenRectangles.push(rectangles[i]);
+      uniqueRectangles.push(rectangles[i]);
     }
   }
+  return uniqueRectangles;
+}
 
-  const intersecedRectangles = [];
-  for (let i = 0; i < seenRectangles.length; i++) {
-    for (let j = i + 1; j < seenRectangles.length; j++) {
+function getIntersectedOfRectangles(rectangles) {
+  const intersectedRectangles = [];
+  for (let i = 0; i < rectangles.length; i++) {
+    for (let j = i + 1; j < rectangles.length; j++) {
       if (i !== j) {
-        const rCurr = seenRectangles[i];
-        const rNext = seenRectangles[j];
+        const rCurr = rectangles[i];
+        const rNext = rectangles[j];
         if (rCurr.isIntersect(rNext)) {
-          const r = rCurr.getRegtangleIfIntersects(rNext);
+          const r = rCurr.getRectangleIfIntersect(rNext);
           if (r.isRectangle) {
-            intersecedRectangles.push(r);
+            intersectedRectangles.push(r);
           }
         }
       }
     }
   }
+  return intersectedRectangles;
+}
 
-  const seenIntersecedRectangles = [];
-  for (let i = 0; i < intersecedRectangles.length; i++) {
-    let isDuplicate = false;
-    for (let j = 0; j < seenIntersecedRectangles.length; j++) {
-      if (intersecedRectangles[i].isSame(seenIntersecedRectangles[j])) {
-        isDuplicate = true;
-        break;
-      }
-    }
-    if (!isDuplicate) {
-      seenIntersecedRectangles.push(intersecedRectangles[i]);
-    }
+function getAreaOfRectangles(rectangles) {
+  const areas = [];
+  for (let i = 0; i < rectangles.length; i++) {
+    areas.push(rectangles[i].getArea());
   }
+  return areas;
+}
 
-  const arrAreaOfSeenRectangles = [];
-  for (let i = 0; i < seenRectangles.length; i++) {
-    arrAreaOfSeenRectangles.push(seenRectangles[i].getArea());
-  }
+function calculate(arr) {
+  //find unique rectangles
+  const rects = getRectanglesFromInput(arr);
+  const uniqueRects = getUniqueRectangles(rects);
 
-  const arrAreaOfSeenIntersecedRectangles = [];
-  for (let i = 0; i < seenIntersecedRectangles.length; i++) {
-    arrAreaOfSeenIntersecedRectangles.push(
-      seenIntersecedRectangles[i].getArea()
-    );
-  }
+  //find unique rectangles that intersected
+  const intersecedRects = getIntersectedOfRectangles(uniqueRects);
+  const uniqueIntersecedRects = getUniqueRectangles(intersecedRects);
+
+  //get sum area of unique all rectangles
+  const areaOfUniqueRects = getAreaOfRectangles(uniqueRects);
+  const areaOfUniqueIntersecedRects = getAreaOfRectangles(
+    uniqueIntersecedRects
+  );
 
   const sum =
-    arrAreaOfSeenRectangles.reduce((a, b) => a + b, 0) -
-    arrAreaOfSeenIntersecedRectangles.reduce((a, b) => a + b, 0);
+    areaOfUniqueRects.reduce((a, b) => a + b, 0) -
+    areaOfUniqueIntersecedRects.reduce((a, b) => a + b, 0);
 
   return sum;
 }
