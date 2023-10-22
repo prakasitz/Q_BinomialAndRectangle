@@ -31,7 +31,7 @@ class Rectangle {
   }
 
   calSlope() {
-    return this.verticalDistance / this.horizontalDistance;
+    return (this.coordA.y - this.coordB.y) / (this.coordA.x - this.coordB.x)
   }
 
   calArea() {
